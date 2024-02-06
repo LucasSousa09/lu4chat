@@ -19,6 +19,7 @@ const config: Config = {
       },
       textShadow: {
         light: '2px 2px 3px rgba(16, 120, 194, .5)',
+        heavy: '4px 2px 0px rgba(16, 120, 194, 1), 0px 2px 0px rgba(16, 120, 194, 1)'
       },
     },
   },
