@@ -12,7 +12,7 @@ export function Text({display = 'inline', color = 'blue', children }: TextProps)
         <span className={
                 `${display} ` +
                 `${color === 'white' ? 'text-[#D9EFFF] text-shadow-heavy' : 'text-primary'} ` +
-                "text-[60px] font-bold pr-5"
+                "text-6xl font-bold pr-5"
         }>
             {children}
         </span>
