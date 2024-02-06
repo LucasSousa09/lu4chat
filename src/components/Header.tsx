@@ -3,7 +3,7 @@ import Image from "next/image";
 
 import { CaretDown } from '@phosphor-icons/react/dist/ssr'
 
-import logoWhite from '../assets/Logo_white.png'
+import logoWhite from '../assets/logo-white.png'
 
 
 export function Header(){
