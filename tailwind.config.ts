@@ -8,13 +8,22 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      colors: {
+        primary: '#1078C2'
+      },
+      borderWidth: {
+        '1.5': '1.5px'
+      },
+      maxWidth: {
+        'desktop': '1440px'
+      },
+      textShadow: {
+        light: '2px 2px 3px rgba(16, 120, 194, .5)',
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss-textshadow')
+  ],
 };
 export default config;
