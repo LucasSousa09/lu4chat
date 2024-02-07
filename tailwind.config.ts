@@ -11,6 +11,7 @@ const config: Config = {
       colors: {
         primary: '#1078C2',
         secondary: '#083D64',
+        terciary: '#769CB8',
         overlay: 'rgba(0,0,0,0.5)'
       },
       borderWidth: {
