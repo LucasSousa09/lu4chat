@@ -6,9 +6,10 @@ import { Dispatch, SetStateAction } from "react";
 type SidebarProps = {
     sidebarIsOpen: boolean,
     setSidebarIsOpen: Dispatch<SetStateAction<boolean>>
+    setModalIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
-export function Sidebar({ setSidebarIsOpen, sidebarIsOpen }: SidebarProps) {
+export function Sidebar({ setModalIsOpen , setSidebarIsOpen, sidebarIsOpen }: SidebarProps) {
     return (
         <div 
             className={
@@ -33,7 +34,11 @@ export function Sidebar({ setSidebarIsOpen, sidebarIsOpen }: SidebarProps) {
                         Salas Públicas
                 </Link>
                 <button
-                    onClick={() => setSidebarIsOpen(state => !state)}
+                    onClick={() => {
+                        setSidebarIsOpen(state => !state)
+                        setModalIsOpen(state => !state)
+                        return
+                    }}
                     className="text-primary font-medium flex p-4 border-b border-primary"
                 >
                     + Criar nova sala

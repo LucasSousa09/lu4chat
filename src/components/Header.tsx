@@ -37,7 +37,7 @@ export function Header({ setModalIsOpen }: HeaderProps){
                     }
                 </button>
 
-                <Sidebar setSidebarIsOpen={setSidebarIsOpen} sidebarIsOpen={sidebarIsOpen}/>
+                <Sidebar setModalIsOpen={setModalIsOpen} setSidebarIsOpen={setSidebarIsOpen} sidebarIsOpen={sidebarIsOpen}/>
 
                 <Link href="/">
                     <Image className="hidden md:block" alt="" src={logoWhite} />
@@ -92,14 +92,14 @@ export function Header({ setModalIsOpen }: HeaderProps){
 
                 <div className="ml-auto flex gap-4">
                     <Link href="/login" className={
-                        "hidden sm:block bg-primary text-white font-bold rounded py-2 px-4 text-base sm:text-2xl " +
+                        "hidden sm:block bg-primary text-white font-bold rounded py-2 px-4 text-base sm:text-xl md:text-2xl " +
                         "transition-opacity  hover:opacity-75"
                         }
                     >
                         Login
                     </Link>
                     <Link href="/create-account" className={
-                        "border border-primary text-primary font-bold rounded py-2 px-4 text-base sm:text-2xl " +
+                        "border border-primary text-primary font-bold rounded py-2 px-4 text-base sm:text-xl md:text-2xl " +
                         "transition-opacity  hover:opacity-75"
                         }
                     >

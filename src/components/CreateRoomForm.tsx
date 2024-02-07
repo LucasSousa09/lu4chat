@@ -20,15 +20,15 @@ export function CreateRoomForm({ modalIsOpen, setModalIsOpen }: CreateRoomFormPr
                 `${modalIsOpen ? 'flex' : 'hidden' }`
             }
         >
-            <form className="relative bg-white flex flex-col py-12 px-16 rounded border-2 border-primary max-w-[520px]" action="">
+            <form className="relative bg-white flex flex-col py-8 sm:py-12 px-6 sm:px-16 rounded border-2 border-primary max-w-[520px]" action="">
                 <button
                     onClick={() => setModalIsOpen(state => !state)} 
-                    className="absolute right-16"
+                    className="absolute right-6 sm:right-16"
                 >
-                    <X className="text-primary h-6 w-6" weight="bold" />
+                    <X className="text-primary h-5 w-5 sm:h-6 sm:w-6" weight="bold" />
                 </button>
                 
-                <strong className="font-medium text-[28px] text-primary mb-3">Crie uma Sala</strong>
+                <strong className="font-medium text-xl sm:text-[28px] text-primary mb-3">Crie uma Sala</strong>
 
                 <InputBox inputId="room-name" inputPlaceholder="ex: Honkai Star Rail - BR" labelText="Nome da Sala" />        
 
@@ -36,7 +36,7 @@ export function CreateRoomForm({ modalIsOpen, setModalIsOpen }: CreateRoomFormPr
 
                 <SelectorBox labelText="Permissões" selectId="room-permissions" />
 
-                <Button>Criar sala</Button>          
+                <Button>Criar sala</Button>
             </form>
         </div>
     )
