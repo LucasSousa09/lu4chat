@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react"
+import { Dispatch, SetStateAction, useState } from "react"
 
 import { CaretDown, ListDashes, X } from '@phosphor-icons/react/dist/ssr'
 
@@ -12,8 +12,13 @@ import logoWhite from '../assets/logo-white.png'
 import logoMini from '../assets/logo-mini.png'
 
 
-export function Header(){
+type HeaderProps = {
+    setModalIsOpen: Dispatch<SetStateAction<boolean>>
+}
+
+export function Header({ setModalIsOpen }: HeaderProps){
     const [ sidebarIsOpen, setSidebarIsOpen ] = useState(false)
+    const [ chatOptionsIsOpen, setChatOptionsIsOpen ] = useState(false)
 
     return (
         <header className="relative width-full border-b-primary border-b-1.5 ">
@@ -39,13 +44,50 @@ export function Header(){
                     <Image className="block md:hidden h-12 w-12 sm:h-16 sm:w-16" alt="" src={logoMini} />
                 </Link>
 
-                <button className={
-                        "hidden font-medium sm:flex items-center gap-1 text-primary sm:text-xl " +
-                        "transition-all ease-linear duration-150 hover:text-shadow-light "
+                <button
+                    onClick={() => setChatOptionsIsOpen(state => !state)} 
+                    className={
+                        "relative hidden font-medium sm:flex items-center gap-1 text-primary sm:text-xl " +
+                        "hover:text-shadow-light transition-all ease-linear duration-150"
                     } 
                 >
                     Conversas
-                    <CaretDown className="sm:h-6 sm:w-6" />
+                    <CaretDown 
+                        className={
+                            "sm:h-6 sm:w-6 transition-transform " +
+                            `${chatOptionsIsOpen && 'rotate-180'}`
+                        } 
+                    />
+
+                    {
+                        chatOptionsIsOpen && (
+                            <div className="absolute bg-white top-full right-1/2 translate-x-1/2 p-2 mt-4 hidden sm:flex flex-col rounded-md shadow-chat-options" >
+                                <Link 
+                                    onClick={() => setChatOptionsIsOpen(true)}
+                                    className="text-shadow-none whitespace-nowrap text-left py-3 px-2 text-base hover:bg-primary hover:text-white rounded transition-colors ease-in-out" href="/my-chats"
+                                >
+                                        Minhas Conversas
+                                </Link>
+                                <Link 
+                                    onClick={() => setChatOptionsIsOpen(true)}
+                                    className="text-shadow-none whitespace-nowrap text-left py-3 px-2 text-base hover:bg-primary hover:text-white rounded transition-colors ease-in-out" href="/public-rooms"
+                                >
+                                        Salas Públicas
+                                </Link>
+                                <button 
+                                    onClick={() => {
+                                        setChatOptionsIsOpen(true)
+                                        setModalIsOpen(state => !state)
+                                        return
+                                    }}
+                                    className="whitespace-nowrap text-left py-3 px-2 text-base hover:bg-primary hover:text-white rounded transition-colors ease-in-out" 
+                                >
+                                        + Criar sala
+                                </button>
+                            </div>
+                        )
+                    }
+
                 </button>
 
                 <div className="ml-auto flex gap-4">

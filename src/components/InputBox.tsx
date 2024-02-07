@@ -1,3 +1,5 @@
+'use client'
+
 type InputBox = {
     inputType?: 'text' | 'password'
     inputId: string
@@ -13,7 +15,7 @@ export function InputBox({labelText, inputId, inputType = 'text', inputPlacehold
                 id={inputId} 
                 type={inputType} 
                 placeholder={inputPlaceholder}
-                className="border border-primary rounded py-3 px-4 font-light mb-3 text-sm sm:text-base text-secondary last-of-type:mb-6" 
+                className="border border-primary rounded py-3 px-4 font-light mb-3 text-sm sm:text-base text-secondary last-of-type:mb-6 focus:outline-primary" 
             />
         </>
     )
