@@ -1,9 +1,11 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
+import { Container } from "../components/Container";
 import { Header } from '../components/Header'
 
 import "./globals.css";
+import { CreateRoomForm } from "@/components/CreateRoomForm";
 
 const poppins = Poppins({ 
   weight: ['300','400','500','700'],
@@ -23,8 +25,9 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <body className={poppins.className}>
-        <Header />
-        {children}
+        <Container>
+          {children}         
+        </Container>
       </body>
     </html>
   );
