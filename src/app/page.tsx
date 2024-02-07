@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import heroImg from '../assets/hero-image.jpg'
 import { Text } from "../components/Text";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,8 +18,8 @@ export default function Home() {
           <Text>para você</Text>
         </div>
 
-        <button className={
-            "mt-6 font-bold text-2xl leading-normal bg-primary text-white w-full rounded-lg py-2 px-3 " +
+        <Link href="/create-account" className={
+            "flex justify-center mt-6 font-bold text-2xl leading-normal bg-primary text-white w-full rounded-lg py-2 px-3 " +
             "sm:mt-12 sm:text-4xl sm:leading-normal sm:py-3 sm:px-5 " +
             "lg:text-4xl lg:leading-normal " +
             "xl:text-5xl xl:leading-normal " +
@@ -26,7 +27,7 @@ export default function Home() {
           }
         >
           Se conecte ao futuro
-        </button>
+        </Link>
       </div>
     </main>
   );

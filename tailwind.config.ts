@@ -9,7 +9,8 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        primary: '#1078C2'
+        primary: '#1078C2',
+        secondary: '#083D64'
       },
       borderWidth: {
         '1.5': '1.5px'
