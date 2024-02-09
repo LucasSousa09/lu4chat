@@ -12,7 +12,7 @@ export function Container({ children }: ContainerProps ){
     const [ modalIsOpen, setModalIsOpen ] = useState(false)
 
     return (
-        <div className="w-full h-full">
+        <div className="w-full h-full bg-secondary">
             <Header setModalIsOpen={setModalIsOpen}/>
             <CreateRoomForm modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}/>
             {children}

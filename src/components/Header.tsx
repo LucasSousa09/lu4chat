@@ -21,9 +21,9 @@ export function Header({ setModalIsOpen }: HeaderProps){
     const [ chatOptionsIsOpen, setChatOptionsIsOpen ] = useState(false)
 
     return (
-        <header className="relative width-full border-b-primary border-b-1.5 ">
+        <header className="relative width-full max-w-desktop mx-auto bg-white border-b-primary border-b-1.5 ">
             <nav className={
-                "max-w-desktop mx-auto flex gap-3 items-center py-1 px-3 " +
+                "flex gap-3 items-center py-1 px-3 " +
                 "sm:gap-12 sm:py-2 sm:px-4 md:p-6"
             }>
                 <button 

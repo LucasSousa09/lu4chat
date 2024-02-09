@@ -13,7 +13,7 @@ export function Sidebar({ setModalIsOpen , setSidebarIsOpen, sidebarIsOpen }: Si
     return (
         <div 
             className={
-                "absolute top-full left-0 h-[calc(100vh-56px)] w-full sm:hidden bg-white border-t border-primary transition-transform " +
+                "absolute top-full left-0 h-[calc(100vh-56px)] w-full sm:hidden bg-white border-t border-primary transition-transform z-10 " +
                 `${sidebarIsOpen ? 'translate-x-0' : 'translate-x-[-100vw]'}`
             }
 
