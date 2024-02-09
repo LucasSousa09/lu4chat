@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="flex items-center justify-center gap-12 max-w-desktop h-[calc(100vh-100px)] mx-auto px-3">
+    <main className="bg-white flex items-center justify-center gap-12 max-w-desktop h-[calc(100vh-100px)] mx-auto px-3">
       <Image className="hidden lg:block lg:h-[450px] lg:w-[450px] xl:h-[600px] xl:w-[600px]" src={heroImg} alt="4 amigos conversando e rindo entre si" />
 
       <div className="flex flex-col items-center">

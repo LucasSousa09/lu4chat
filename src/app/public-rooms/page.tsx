@@ -3,7 +3,7 @@ import { TitleText } from "@/components/TitleText";
 
 export default function PublicRooms(){
     return (
-        <div className="flex flex-col items-center w-full h-[calc(100vh-100px)] pt-12">
+        <div className="bg-white flex flex-col items-center w-full max-w-desktop h-[calc(100vh-100px)] pt-12 mx-auto">
 
             <TitleText text="Salas Públicas" />
 

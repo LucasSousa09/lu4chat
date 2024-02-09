@@ -5,7 +5,7 @@ import { GoogleLogo } from '@phosphor-icons/react/dist/ssr'
 
 export default function LoginPage(){
     return (
-        <div className="flex items-center justify-center w-full max-w-desktop h-[calc(100vh-100px)] mx-auto px-4">
+        <div className="bg-white flex items-center justify-center w-full max-w-desktop h-[calc(100vh-100px)] mx-auto px-4">
             <div className="sm:mt-[-50px] flex flex-col items-center p-6 sm:py-12 sm:px-16 border-2 border-primary w-full max-w-[520px] rounded">
 
                 <TitleText text="Faça o seu login ao Lu4chat" />
