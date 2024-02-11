@@ -5,7 +5,7 @@ import { useContext } from "react"
 
 type RoomInfoBoxProps = {
     roomName: string
-    roomType: 'Pública' | 'Privada'
+    roomType: 'public' | 'private'
     roomDescription: string
 
     enterRoom?: boolean
@@ -31,7 +31,7 @@ export function RoomInfoBox({ roomName, roomType, roomDescription, currentRoom =
                 }
             >
                 <strong >{roomName}</strong>
-                <span className="font-medium text-sm">{roomType}</span>
+                <span className="font-medium text-sm">{roomType === 'private' ? 'Privada' : 'Pública'}</span>
             </header>
             <div className="flex items-center justify-between px-2 py-3">
                 <span className="text-terciary text-sm">{roomDescription}</span>
