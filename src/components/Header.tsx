@@ -11,6 +11,8 @@ import { Sidebar } from "./Sidebar";
 import logoWhite from '../assets/logo-white.png'
 import logoMini from '../assets/logo-mini.png'
 
+import { signOut, useSession } from "next-auth/react";
+
 
 type HeaderProps = {
     setModalIsOpen: Dispatch<SetStateAction<boolean>>
@@ -19,6 +21,8 @@ type HeaderProps = {
 export function Header({ setModalIsOpen }: HeaderProps){
     const [ sidebarIsOpen, setSidebarIsOpen ] = useState(false)
     const [ chatOptionsIsOpen, setChatOptionsIsOpen ] = useState(false)
+
+    const {data: session, status} = useSession()
 
     return (
         <header className="relative width-full max-w-desktop mx-auto bg-white border-b-primary border-b-1.5 ">
@@ -44,10 +48,10 @@ export function Header({ setModalIsOpen }: HeaderProps){
                     <Image className="block md:hidden h-12 w-12 sm:h-16 sm:w-16" alt="" src={logoMini} />
                 </Link>
 
-                <button
+                <div
                     onClick={() => setChatOptionsIsOpen(state => !state)} 
                     className={
-                        "relative hidden font-medium sm:flex items-center gap-1 text-primary sm:text-xl " +
+                        "cursor-pointer  relative hidden font-medium sm:flex items-center gap-1 text-primary sm:text-xl " +
                         "hover:text-shadow-light transition-all ease-linear duration-150"
                     } 
                 >
@@ -61,7 +65,7 @@ export function Header({ setModalIsOpen }: HeaderProps){
 
                     {
                         chatOptionsIsOpen && (
-                            <div className="absolute bg-white top-full right-1/2 translate-x-1/2 p-2 mt-4 hidden sm:flex flex-col rounded-md shadow-chat-options" >
+                            <div className="absolute bg-white top-full right-1/2 translate-x-1/2 p-2 mt-4 hidden sm:flex flex-col rounded-md shadow-chat-options z-20" >
                                 <Link 
                                     onClick={() => setChatOptionsIsOpen(true)}
                                     className="text-shadow-none whitespace-nowrap text-left py-3 px-2 text-base hover:bg-primary hover:text-white rounded transition-colors ease-in-out" href="/my-chats"
@@ -88,23 +92,39 @@ export function Header({ setModalIsOpen }: HeaderProps){
                         )
                     }
 
-                </button>
+                </div>
 
                 <div className="ml-auto flex gap-4">
-                    <Link href="/login" className={
-                        "hidden sm:block bg-primary text-white font-bold rounded py-2 px-4 text-base sm:text-xl md:text-2xl " +
-                        "transition-opacity  hover:opacity-75"
-                        }
-                    >
-                        Login
-                    </Link>
-                    <Link href="/create-account" className={
-                        "border border-primary text-primary font-bold rounded py-2 px-4 text-base sm:text-xl md:text-2xl " +
-                        "transition-opacity  hover:opacity-75"
-                        }
-                    >
-                        Crie uma conta
-                    </Link>    
+                    {
+                        status === 'authenticated' ? (
+                            <button 
+                                onClick={() => signOut()}
+                                className={
+                                    "hidden sm:block bg-primary text-white font-bold rounded py-2 px-4 text-base sm:text-xl md:text-2xl " +
+                                    "transition-opacity  hover:opacity-75"
+                                }
+                            >
+                                 Sair
+                            </button>
+                        ) : (
+                            <>
+                                <Link href="/login" className={
+                                    "hidden sm:block bg-primary text-white font-bold rounded py-2 px-4 text-base sm:text-xl md:text-2xl " +
+                                    "transition-opacity  hover:opacity-75"
+                                    }
+                                >
+                                    Login
+                                </Link>
+                                <Link href="/create-account" className={
+                                    "border border-primary text-primary font-bold rounded py-2 px-4 text-base sm:text-xl md:text-2xl " +
+                                    "transition-opacity  hover:opacity-75"
+                                    }
+                                >
+                                    Crie uma conta
+                                </Link>
+                            </>
+                        )
+                    }
                 </div>
             </nav>
         </header>
