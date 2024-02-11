@@ -1,11 +1,13 @@
-import type { Metadata } from "next";
+import { getServerSession } from 'next-auth'
+import SessionProvider from '../components/SessionProvider';
+
 import { Poppins } from "next/font/google";
 
 import { Container } from "../components/Container";
-import { Header } from '../components/Header'
 
 import "./globals.css";
-import { CreateRoomForm } from "@/components/CreateRoomForm";
+
+import type { Metadata } from "next";
 
 const poppins = Poppins({ 
   weight: ['300','400','500','700'],
@@ -13,21 +15,27 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "lu4chat | Home",
+  title: "lu4chat",
   description: "Seu novo aplicativo de conversas on-line",
 };
 
-export default function RootLayout({
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const session = await getServerSession()
+    
   return (
     <html lang="pt-BR">
       <body className={poppins.className}>
-        <Container>
-          {children}         
-        </Container>
+        <SessionProvider session={session}>
+          <Container>
+            {children}         
+          </Container>
+        </SessionProvider>
       </body>
     </html>
   );
