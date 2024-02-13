@@ -3,11 +3,11 @@
 import { RoomInfoBox } from "@/components/RoomInfoBox";
 import { TitleText } from "@/components/TitleText";
 
-import { get, onValue, ref } from 'firebase/database'
-import { useEffect, useRef, useState } from 'react'
+import { onValue, ref } from 'firebase/database'
+import { useEffect, useState } from 'react'
 import { database } from '../../libs/firebase'
 
-type FirebaseRooms = [
+export type FirebaseRooms = [
     string, 
     {
         id: string,
@@ -35,11 +35,13 @@ export default function PublicRooms(){
             const data = snapshot.val()
             const firebaseRooms = data.rooms ?? {}
 
-            const test : FirebaseRooms[] = Object.entries(firebaseRooms)
+            const roomsEntries: FirebaseRooms[] = Object.entries(firebaseRooms)
 
-            const test2: RoomProps[] = test.map(values => values[1])
+            // const roomsArray: RoomProps[] = roomsEntries.map(values => values[1])
 
-            setRooms(test2)
+            const roomsArray: RoomProps[] = roomsEntries.map(values => values[1]).filter(room => room.permission === "public")
+
+            setRooms(roomsArray)
         })
     }, [])
 
@@ -50,9 +52,11 @@ export default function PublicRooms(){
 
             <div className="flex flex-col w-11/12 sm:w-full max-w-[540px]">
                 {
-                    rooms.map(room => (
-                        <RoomInfoBox roomDescription={room.description} roomName={room.name} roomType={room.permission} key={room.id} />
-                    ))
+                    rooms.map(room => {
+                        return (
+                            <RoomInfoBox publicRooms={true} key={room.id} roomId={room.id} roomName={room.name} roomDescription={room.description} roomType={room.permission}/>
+                        )
+                    })
                 }
             </div>
         </div>
