@@ -19,8 +19,8 @@ export const SelectorBox = forwardRef<HTMLSelectElement, SelectorBoxProps>(({lab
                     ref={ref}
                     {...rest}
                 >
-                    <option value="private" defaultChecked >Pública</option>
-                    <option value="public">Privada</option>
+                    <option value="public">Pública</option>
+                    <option value="private">Privada</option>
                 </select>
                 <CaretDown className="absolute z-10 h-6 w-6 text-primary bottom-1/2 translate-y-1/2 right-4" />
             </div>
