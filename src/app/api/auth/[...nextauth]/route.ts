@@ -1,6 +1,8 @@
 import NextAuth from "next-auth/next"
-import { NextAuthOptions } from 'next-auth' 
+import { NextAuthOptions } from "next-auth"
+
 import GoogleProvider from "next-auth/providers/google"
+// import CredentialsProvider from "next-auth/providers/credentials";
 
 import { db } from "@/libs/firebase";
 import { collection, addDoc , getDocs, query, where } from "firebase/firestore";
@@ -13,9 +15,22 @@ export const authOptions: NextAuthOptions = {
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID ?? "",
       clientSecret: process.env.GOOGLE_CLIENT_SECRET ?? "",
-    })
+    }),
+    // CredentialsProvider({
+    //   name: "credentials",
+    //   credentials: {
+    //     username: { label: "Username", type: "text", placeholder: "jsmith" },
+    //     password: { label: "Password", type: "password" }
+    //   },
+    //   async authorize(credentials) {
+
+    //   }
+    // })
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  // session: {
+  //   strategy: "jwt",
+  // },
   callbacks: {
     async signIn({ user}) {
       if(!user?.email){
