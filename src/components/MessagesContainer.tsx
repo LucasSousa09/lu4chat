@@ -67,6 +67,8 @@ export function MessagesContainer({roomId, roomName = ""}: MessagesContainerProp
     return (
         <div className="flex-1 p-6 overflow-auto">
             <TitleText returnButton leaveRoom text={roomName} />
+            <span className="text-primary font-medium" >Id da sala: </span>
+            <span className="text-primary" >{roomId.split('-')[0]}</span>
             <div className="flex flex-col mt-6 gap-2">
                 {
                     messages !== undefined && (
