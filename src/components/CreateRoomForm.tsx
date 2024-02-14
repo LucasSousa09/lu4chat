@@ -6,7 +6,7 @@ import { X } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Dispatch, SetStateAction, useEffect } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import { useForm, SubmitHandler } from 'react-hook-form'
 
 import { Button } from "./Button";
@@ -35,6 +35,7 @@ const CreateRoomSchema = zod.object({
 type CreateRoomData = zod.infer<typeof CreateRoomSchema>
 
 export function CreateRoomForm({ modalIsOpen, setModalIsOpen }: CreateRoomFormProps) {
+    const [ creatingRoom, setCreatingRoom ] = useState(false)
     const {data: session} = useSession()
     
     const router = useRouter()
@@ -70,6 +71,7 @@ export function CreateRoomForm({ modalIsOpen, setModalIsOpen }: CreateRoomFormPr
 
     
     const onSubmit: SubmitHandler<CreateRoomData> = async (data) => {
+        setCreatingRoom(true)
         try{
             if(session === null){
                 throw new Error('Must be logged to criate a room')
@@ -90,7 +92,7 @@ export function CreateRoomForm({ modalIsOpen, setModalIsOpen }: CreateRoomFormPr
         catch(err) {
             console.error(err)
         }
-
+        setCreatingRoom(false)
         setModalIsOpen(false)
     }
 
@@ -125,7 +127,11 @@ export function CreateRoomForm({ modalIsOpen, setModalIsOpen }: CreateRoomFormPr
 
                 <SelectorBox {...register('permission')} labelText="Permissões" selectId="room-permission" />
 
-                <Button>Criar sala</Button>
+                <Button
+                 disabled={creatingRoom}
+                >
+                    Criar sala
+                </Button>
             </form>
         </div>
     )
