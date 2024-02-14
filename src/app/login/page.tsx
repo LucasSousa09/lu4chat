@@ -9,6 +9,7 @@ import { GoogleLogo } from '@phosphor-icons/react/dist/ssr'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { signIn } from 'next-auth/react'
+import Link from 'next/link'
 
 type CredetialInputs = {
     email: string,
@@ -50,7 +51,18 @@ export default function LoginPage(){
                     </Button>
                 </form>
                 
-                <span className="bg-primary h-[2px] w-full my-6"/>
+                <div className="flex items-center my-6 w-full h-2">
+                    <span className="bg-primary h-[2px] w-full "/> 
+                        <span className="px-3">
+                            <Link 
+                                href="/create-account"
+                                className='text-sm whitespace-nowrap text-primary hover:underline' 
+                            >
+                                    Crie uma conta
+                            </Link>
+                        </span>
+                    <span className="bg-primary h-[2px] w-full "/>
+                </div>
                 
                 <button 
                     onClick={() => signIn('google', {callbackUrl: '/my-chats'})}

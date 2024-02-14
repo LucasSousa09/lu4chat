@@ -8,6 +8,7 @@ import { InputBox } from "../../components/InputBox";
 import { GoogleLogo } from "@phosphor-icons/react/dist/ssr";
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
+import Link from 'next/link';
 
 type CredetialInputs = {
     email: string,
@@ -67,7 +68,18 @@ export default function CreateAccountPage(){
                     </Button>
                 </form>
                 
-                <span className="bg-primary h-[2px] w-full my-6"/>
+                <div className="flex items-center my-6 w-full h-2">
+                    <span className="bg-primary h-[2px] w-full "/> 
+                        <span className="px-3">
+                            <Link 
+                                href="/login"
+                                className='text-sm whitespace-nowrap text-primary hover:underline' 
+                            >
+                                    Faça login
+                            </Link>
+                        </span>
+                    <span className="bg-primary h-[2px] w-full "/>
+                </div>
                 
                 <button 
                     onClick={() => signIn('google', {callbackUrl: '/public-rooms'})}
