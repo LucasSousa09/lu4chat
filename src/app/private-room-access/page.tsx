@@ -10,6 +10,8 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { api } from '@/libs/axios'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+import { toast } from 'react-toastify'
 
 const EnterPrivateRoomSchema = zod.object({
     id: zod.string()
@@ -22,29 +24,45 @@ const EnterPrivateRoomSchema = zod.object({
 type EnterPrivateRoomData = zod.infer<typeof EnterPrivateRoomSchema>
 
 export default function PrivateRoomAccess(){
+    const [enteringRoom, setEnteringRoom] = useState(false)
     const {data: session} = useSession()
 
     const router = useRouter()
 
-    const { handleSubmit, register, reset } = useForm<EnterPrivateRoomData>({
+    const { handleSubmit, register, formState, setFocus } = useForm<EnterPrivateRoomData>({
         resolver: zodResolver(EnterPrivateRoomSchema)
     })
 
+    useEffect(() => {
+        const currentError = Object.keys(formState.errors)[0]
+        const errorMessage = formState.errors[currentError as keyof EnterPrivateRoomData]?.message
+
+        toast.error(errorMessage)
+    },[formState.errors])
+
     const onSubmit: SubmitHandler<EnterPrivateRoomData> = async (data) => {
+        setEnteringRoom(true)
         const resIfChatExists = await api.post('/verify-if-chat-exists', {chatID: `${data.id + '-private'}`})
         const chatExistsData = JSON.parse(resIfChatExists.data)
 
         if(chatExistsData === null){
-            console.error('Room not found')
-            reset()
+            toast.error('Essa sala não existe')
+            setFocus('id')
+            setEnteringRoom(false)
             return
         }
         
         const res = await api.post('/enter-private-room', {chatID: `${data.id + '-private'}`, password: data.password, email:session?.user?.email})
         
         if(res.data === 'OK'){
+            toast.success('Redirecionamento bem sucedido')
             router.push(`/my-chats/${data.id + '-private'}`)
         }
+        else{
+            setFocus('password')
+            toast.error('Senha incorreta')
+        }
+        setEnteringRoom(false)
     }
 
     return (
@@ -59,7 +77,9 @@ export default function PrivateRoomAccess(){
 
                 <InputBox textColor='white' {...register('password')} inputId="room-password" type="password" inputPlaceholder="••••••" labelText="Senha" />
 
-                <Button>Entrar</Button>
+                <Button
+                    disabled={enteringRoom}
+                >Entrar</Button>
             </form>
         </div>
     )
