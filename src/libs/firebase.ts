@@ -2,15 +2,14 @@ import { getApp, getApps, initializeApp } from "firebase/app";
 import { getDatabase } from 'firebase/database'
 import { getFirestore } from 'firebase/firestore'
 
-
 const firebaseConfig = {
-  apiKey: "AIzaSyBdIoMH7KLS6BOg8L-9be3Ch3AacGTqHhU",
-  authDomain: "lu4chat.firebaseapp.com",
-  projectId: "lu4chat",
-  databaseURL: "https://lu4chat-default-rtdb.firebaseio.com/",
-  storageBucket: "lu4chat.appspot.com",
-  messagingSenderId: "633966148045",
-  appId: "1:633966148045:web:efc6bd288d7c1b8158ac84"
+  apiKey: process.env.FIREBASE_API_KEY || "",
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN || "",
+  projectId: process.env.FIREBASE_PROJECT_ID || "",
+  databaseURL: process.env.FIREBASE_DATABASE_URL || "",
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET || "",
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID || "",
+  appId: process.env.FIREBASE_APP_ID || ""
 };
 
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
