@@ -12,6 +12,7 @@
 - NextJS
 - Tailwind CSS
 - React Hook Form
+- React Toastify
 - Phosphor Icons
 - axios
 - zod
