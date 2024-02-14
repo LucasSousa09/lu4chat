@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction, useState } from "react"
 
 import { CaretDown, ListDashes, X } from '@phosphor-icons/react/dist/ssr'
 
-import { Sidebar } from "./Sidebar";
+import { MobileSidebar } from "./MobileSidebar";
 
 import logoWhite from '../assets/logo-white.png'
 import logoMini from '../assets/logo-mini.png'
@@ -41,7 +41,7 @@ export function Header({ setModalIsOpen }: HeaderProps){
                     }
                 </button>
 
-                <Sidebar setModalIsOpen={setModalIsOpen} setSidebarIsOpen={setSidebarIsOpen} sidebarIsOpen={sidebarIsOpen}/>
+                <MobileSidebar status={status} setModalIsOpen={setModalIsOpen} setSidebarIsOpen={setSidebarIsOpen} sidebarIsOpen={sidebarIsOpen}/>
 
                 <Link href="/">
                     <Image className="hidden md:block" alt="" src={logoWhite} />
@@ -67,16 +67,25 @@ export function Header({ setModalIsOpen }: HeaderProps){
                         chatOptionsIsOpen && (
                             <div className="absolute bg-white top-full right-1/2 translate-x-1/2 p-2 mt-4 hidden sm:flex flex-col rounded-md shadow-chat-options z-20" >
                                 <Link 
+                                    href="/my-chats"
                                     onClick={() => setChatOptionsIsOpen(true)}
-                                    className="text-shadow-none whitespace-nowrap text-left py-3 px-2 text-base hover:bg-primary hover:text-white rounded transition-colors ease-in-out" href="/my-chats"
+                                    className="text-shadow-none whitespace-nowrap text-left py-3 px-2 text-base hover:bg-primary hover:text-white rounded transition-colors ease-in-out" 
                                 >
                                         Minhas Conversas
                                 </Link>
                                 <Link 
+                                    href="/public-rooms"
                                     onClick={() => setChatOptionsIsOpen(true)}
-                                    className="text-shadow-none whitespace-nowrap text-left py-3 px-2 text-base hover:bg-primary hover:text-white rounded transition-colors ease-in-out" href="/public-rooms"
+                                    className="text-shadow-none whitespace-nowrap text-left py-3 px-2 text-base hover:bg-primary hover:text-white rounded transition-colors ease-in-out" 
                                 >
                                         Salas Públicas
+                                </Link>
+                                <Link 
+                                    href="/private-room-access"
+                                    onClick={() => setChatOptionsIsOpen(true)}
+                                    className="text-shadow-none whitespace-nowrap text-left py-3 px-2 text-base hover:bg-primary hover:text-white rounded transition-colors ease-in-out" 
+                                >
+                                        Entrar numa sala
                                 </Link>
                                 <button 
                                     onClick={() => {

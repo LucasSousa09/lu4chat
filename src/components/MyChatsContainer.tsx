@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { RoomSidebarProvider } from '../context/RoomSidebarContext'
+import { MyChatsSidebarProvider } from '../context/MyChatsSidebarContext'
 
 type MyChatsContainerProps = {
     children: ReactNode
@@ -8,9 +8,9 @@ type MyChatsContainerProps = {
 export function MyChatsContainer({ children }: MyChatsContainerProps){
     return (
         <div className="relative bg-white max-w-desktop mx-auto flex h-[calc(100vh-52px)] sm:h-[calc(100vh-80px)] md:h-[calc(100vh-100px)]">
-            <RoomSidebarProvider>
+            <MyChatsSidebarProvider>
                 {children}
-            </RoomSidebarProvider>
+            </MyChatsSidebarProvider>
         </div>
     )
 }
