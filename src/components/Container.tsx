@@ -1,9 +1,13 @@
 'use client'
 
 import { ReactNode, useState } from "react"
+import { usePathname } from "next/navigation"
+
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from "react-toastify"
+
 import { Header } from "./Header"
 import { CreateRoomForm } from "./CreateRoomForm"
-import { usePathname } from "next/navigation"
 
 type ContainerProps = {
     children: ReactNode
@@ -15,7 +19,7 @@ export function Container({ children }: ContainerProps ){
     const pathName = usePathname()
 
     return (
-        <div className="w-full h-full bg-secondary">
+        <div className="relative w-full h-full bg-secondary">
             <Header setModalIsOpen={setModalIsOpen}/>
             <CreateRoomForm modalIsOpen={modalIsOpen} setModalIsOpen={setModalIsOpen}/>
             {
@@ -28,6 +32,7 @@ export function Container({ children }: ContainerProps ){
                 )
             }
             {children}
+            <ToastContainer position="bottom-right" theme="colored"/>
         </div>
     )
 }
