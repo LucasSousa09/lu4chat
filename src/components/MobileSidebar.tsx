@@ -2,14 +2,17 @@
 
 import Link from "next/link";
 import { Dispatch, SetStateAction } from "react";
+import { Button } from "./Button";
+import { signOut } from "next-auth/react";
 
 type SidebarProps = {
     sidebarIsOpen: boolean,
     setSidebarIsOpen: Dispatch<SetStateAction<boolean>>
     setModalIsOpen: Dispatch<SetStateAction<boolean>>
+    status: "authenticated" | "loading" | "unauthenticated"
 }
 
-export function Sidebar({ setModalIsOpen , setSidebarIsOpen, sidebarIsOpen }: SidebarProps) {
+export function MobileSidebar({ setModalIsOpen , setSidebarIsOpen, sidebarIsOpen, status }: SidebarProps) {
     return (
         <div 
             className={
@@ -44,16 +47,33 @@ export function Sidebar({ setModalIsOpen , setSidebarIsOpen, sidebarIsOpen }: Si
                     + Criar nova sala
                 </button>
 
-                <Link
-                    href="/login"
-                    onClick={() => setSidebarIsOpen(state => !state)}
-                    className={
-                        "mt-auto mx-auto flex items-center justify-center gap-3 font-medium text-white bg-primary w-[calc(100%-32px)] rounded text-base sm:text-xl leafing-normal p-3 " +
-                        "hover:opacity-75 transition-opacity duration-150 "
-                    }
-                >
-                    Login
-                </Link>
+                {
+                    status === 'authenticated' ? (
+                        <button
+                            onClick={() => {
+                                signOut()
+                                setSidebarIsOpen(state => !state)
+                            }}
+                            className={
+                                "mt-auto mx-auto flex items-center justify-center gap-3 font-medium text-white bg-primary w-[calc(100%-32px)] rounded text-base sm:text-xl leafing-normal p-3 " +
+                                "hover:opacity-75 transition-opacity duration-150 "
+                            }
+                        >
+                            Sair
+                        </button>
+                    ) : (
+                        <Link
+                            href="/login"
+                            onClick={() => setSidebarIsOpen(state => !state)}
+                            className={
+                                "mt-auto mx-auto flex items-center justify-center gap-3 font-medium text-white bg-primary w-[calc(100%-32px)] rounded text-base sm:text-xl leafing-normal p-3 " +
+                                "hover:opacity-75 transition-opacity duration-150 "
+                            }
+                        >
+                            Login
+                        </Link>
+                    )
+                }
             </nav>
         </div>
     )
