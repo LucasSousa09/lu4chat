@@ -1,21 +1,18 @@
 'use client'
 
 import * as zod from 'zod' 
+import { toast } from 'react-toastify'
 import { X } from '@phosphor-icons/react'
 import { useRouter } from 'next/navigation'
 import { useSession } from 'next-auth/react'
-import { ref, set } from "firebase/database"
-import { createId } from '@paralleldrive/cuid2'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Dispatch, SetStateAction, useEffect } from "react"
 import { useForm, SubmitHandler } from 'react-hook-form'
-
-
-import { database } from '../libs/firebase'
 
 import { Button } from "./Button";
 import { InputBox } from "./InputBox";
 import { SelectorBox } from "./SelectorBox";
-import { zodResolver } from '@hookform/resolvers/zod'
+import { api } from '@/libs/axios'
 
 type CreateRoomFormProps = {
     modalIsOpen: boolean
@@ -29,9 +26,9 @@ const CreateRoomSchema = zod.object({
     description: zod.string()
                 .min(3, 'A descrição da sala deve ter no mínimo 3 caracteres')
                 .max(20, 'A descrição sala não deve conter mais de 40 caracteres'),
-    permissions: zod.enum(['private', 'public']),
-    "room-password":  zod.string().refine((val) => val.length > 0, {
-        message: 'password must contain moore than 0 characters'
+    permission: zod.enum(['private', 'public']),
+    "room-password":  zod.string().refine((val) => val.length > 5, {
+        message: 'A senha deve conter no minímo 6 caracteres'
     })
 })
 
@@ -50,49 +47,43 @@ export function CreateRoomForm({ modalIsOpen, setModalIsOpen }: CreateRoomFormPr
     } = useForm<CreateRoomData>({
         resolver: zodResolver(CreateRoomSchema),
         defaultValues: {
-            permissions: 'public',
-            "room-password": '0000'
+            permission: 'public',
+            "room-password": '000000'
         }
     })
+    
     useEffect(() => {
-        if(formState.dirtyFields.permissions === undefined){
-            setValue('room-password', '0000')
+        if(formState.dirtyFields.permission === undefined){
+            setValue('room-password', '000000')
         }
         else{
             setValue('room-password', '')
         }
-    }, [formState.dirtyFields.permissions])
+    }, [formState.dirtyFields.permission])
+
+    useEffect(() => {
+        const currentError = Object.keys(formState.errors)[0]
+        const errorMessage = formState.errors[currentError as keyof CreateRoomData]?.message
+
+        toast.error(errorMessage)
+    },[formState.errors])
 
     
-    const onSubmit: SubmitHandler<CreateRoomData> = (data) => {
-        const newCuid = createId()
-
+    const onSubmit: SubmitHandler<CreateRoomData> = async (data) => {
         try{
             if(session === null){
                 throw new Error('Must be logged to criate a room')
             }
 
-            if(data['room-password'] === '0000'){
-                set(ref(database, 'rooms/' + newCuid), {
-                    id: newCuid,
-                    name: data.name,
-                    description: data.description,
-                    permission: data.permissions,
-                })
+            const res = await api.post('/create-room', {
+                name: data.name, 
+                description: data.description,
+                "room-password": data['room-password'],
+                permission: data.permission,
+                email: session.user?.email
+            })
 
-                router.push(`/my-chats/${newCuid}`)
-
-            }
-            else {
-                set(ref(database, 'rooms/' + newCuid + '-private'), {
-                    id: newCuid + '-private',
-                    name: data.name,
-                    description: data.description,
-                    permission: data.permissions,
-                    "room-password": data['room-password']
-                })
-                router.push(`/my-chats/${newCuid}-private`)
-            }
+            router.push(`/my-chats/${res.data.roomIdForRedirect}`)
 
             reset()
         }
@@ -128,11 +119,11 @@ export function CreateRoomForm({ modalIsOpen, setModalIsOpen }: CreateRoomFormPr
                 <InputBox {...register('description')} inputId="room-description" inputPlaceholder="ex: Para todos os fãs de Star Rail" labelText="Descrição" />
 
                 {
-                    formState.dirtyFields.permissions === true &&
-                    <InputBox {...register('room-password')} inputId='private-password' inputPlaceholder='••••••' labelText='Senha da sala' />
+                    formState.dirtyFields.permission === true &&
+                    <InputBox {...register('room-password')} inputType='password'  inputId='private-password' inputPlaceholder='••••••' labelText='Senha da sala' />
                 }
 
-                <SelectorBox {...register('permissions')} labelText="Permissões" selectId="room-permissions" />
+                <SelectorBox {...register('permission')} labelText="Permissões" selectId="room-permission" />
 
                 <Button>Criar sala</Button>
             </form>
