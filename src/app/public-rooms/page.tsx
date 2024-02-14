@@ -27,9 +27,11 @@ type RoomProps = {
 
 
 export default function PublicRooms(){
+    const [loading, setLoading] = useState(true)
     const [rooms, setRooms] = useState<RoomProps[]>([])
 
     useEffect(() => {
+        setLoading(true)
         const RoomsRef = ref(database)
         onValue(RoomsRef, (snapshot) => {
             const data = snapshot.val()
@@ -42,23 +44,36 @@ export default function PublicRooms(){
             const roomsArray: RoomProps[] = roomsEntries.map(values => values[1]).filter(room => room.permission === "public")
 
             setRooms(roomsArray)
+            setLoading(false)
         })
     }, [])
 
     return (
-        <div className="bg-white flex flex-col items-center w-full max-w-desktop h-[calc(100vh-100px)] pt-12 mx-auto">
+        <>
+            {
+                loading ? (
+                    <div className="flex items-start justify-center bg-white max-w-desktop h-[calc(100vh-100px)] mx-auto pt-12">
+                        <strong className=" bg-secondary py-6 px-8 rounded text-white text-4xl animate-pulse">
+                            Loading...
+                        </strong>
+                    </div>
+                ) : (
+                    <div className="bg-white flex flex-col items-center w-full max-w-desktop h-[calc(100vh-100px)] pt-12 mx-auto">
 
-            <TitleText text="Salas Públicas" />
+                        <TitleText text="Salas Públicas" />
 
-            <div className="flex flex-col w-11/12 sm:w-full max-w-[540px]">
-                {
-                    rooms.map(room => {
-                        return (
-                            <RoomInfoBox publicRooms={true} key={room.id} roomId={room.id} roomName={room.name} roomDescription={room.description} roomType={room.permission}/>
-                        )
-                    })
-                }
-            </div>
-        </div>
+                        <div className="flex flex-col w-11/12 sm:w-full max-w-[540px]">
+                            {
+                                rooms.map(room => {
+                                    return (
+                                        <RoomInfoBox publicRooms={true} key={room.id} roomId={room.id} roomName={room.name} roomDescription={room.description} roomType={room.permission}/>
+                                    )
+                                })
+                            }
+                        </div>
+                    </div>
+                )
+            }
+        </>
     )
 }
