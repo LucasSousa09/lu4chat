@@ -1,7 +1,6 @@
 import { database, db } from "@/libs/firebase"
 import { get, ref } from "firebase/database"
 
-import { redirect } from "next/navigation"
 import { collection, where, query, getDocs, doc, updateDoc, arrayUnion } from "firebase/firestore"
 
 

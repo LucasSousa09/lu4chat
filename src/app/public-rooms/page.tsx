@@ -66,7 +66,7 @@ export default function PublicRooms(){
                             {
                                 rooms.map(room => {
                                     return (
-                                        <RoomInfoBox publicRooms={true} key={room.id} roomId={room.id} roomName={room.name} roomDescription={room.description} roomType={room.permission}/>
+                                        <RoomInfoBox key={room.id} roomId={room.id} roomName={room.name} roomDescription={room.description} roomType={room.permission}/>
                                     )
                                 })
                             }

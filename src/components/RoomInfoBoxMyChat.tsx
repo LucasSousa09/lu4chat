@@ -1,8 +1,6 @@
 import { database } from "@/libs/firebase";
 import { get, ref } from "firebase/database";
 
-import Link from "next/link";
-
 type Props = {
     roomId: string,
     currentRoom: boolean
@@ -41,7 +39,7 @@ export async function RoomInfoBoxMyChat({roomId, currentRoom}: Props) {
                     </header>
                     <div className="flex items-center justify-between px-2 py-3">
                         <span className="text-terciary text-sm">{roomData.description}</span>
-                        <Link
+                        <a
                             href={`/my-chats/${roomData.id}`} 
                             className={
                                 "p-[6px] rounded font-medium text-sm " +
@@ -49,7 +47,7 @@ export async function RoomInfoBoxMyChat({roomId, currentRoom}: Props) {
                             }
                             >
                             Entrar
-                        </Link>
+                        </a>
                     </div>
                 </div>
             )
