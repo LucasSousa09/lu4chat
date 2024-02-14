@@ -17,20 +17,20 @@ type CredetialInputs = {
 }
 
 export default function LoginPage(){
-    const { register, handleSubmit, reset } = useForm<CredetialInputs>()
+    // const { register, handleSubmit, reset } = useForm<CredetialInputs>()
 
-    const router = useRouter()
+    // const router = useRouter()
 
-    const onSubmit: SubmitHandler<CredetialInputs> = async (data) => {
-        try {
+    // const onSubmit: SubmitHandler<CredetialInputs> = async (data) => {
+    //     try {
 
-            reset()
-            router.push('/my-chats')
-        }
-        catch(err) {
-            console.error(err)
-        }
-    }
+    //         reset()
+    //         router.push('/my-chats')
+    //     }
+    //     catch(err) {
+    //         console.error(err)
+    //     }
+    // }
 
     return (
         <div className="bg-white flex items-center justify-center w-full max-w-desktop h-[calc(100vh-100px)] mx-auto px-4">
@@ -38,7 +38,7 @@ export default function LoginPage(){
 
                 <TitleText text="Faça o seu login ao Lu4chat" />
                 
-                <form
+                {/* <form
                     onSubmit={handleSubmit(onSubmit)} 
                     className="flex flex-col w-full"
                 >
@@ -49,7 +49,7 @@ export default function LoginPage(){
                     <Button>
                         Entrar
                     </Button>
-                </form>
+                </form> */}
                 
                 <div className="flex items-center my-6 w-full h-2">
                     <span className="bg-primary h-[2px] w-full "/> 
