@@ -1,10 +1,10 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import { RoomSidebar } from "@/components/RoomSidebar";
+import { MyChatsSidebar } from "@/components/MyChatsSidebar";
 import { RoomInfoBoxMyChat } from "@/components/RoomInfoBoxMyChat";
 import { MessagesContainer } from "@/components/MessagesContainer";
-import { RoomSidebarProvider } from "@/context/RoomSidebarContext";
+import { MyChatsSidebarProvider } from "@/context/MyChatsSidebarContext";
 import { MessageSenderForm } from "@/components/MessageSenderForm";
 
 import { api } from "@/libs/axios";
@@ -45,23 +45,22 @@ export default async function Chats({params}: {params: {id: string}}){
 
     return (
         <div className="relative bg-white max-w-desktop mx-auto flex h-[calc(100vh-52px)] sm:h-[calc(100vh-80px)] md:h-[calc(100vh-100px)]">
-            <RoomSidebarProvider>
-
-                <RoomSidebar>
+            <MyChatsSidebarProvider>
+                <MyChatsSidebar>
                     {
                         userRoomsData.length > 0 &&
                         userRoomsData.map((room: string) => (
                             <RoomInfoBoxMyChat key={room} roomId={room} currentRoom={params.id === room ? true : false} />
                         ))
                     }
-                </RoomSidebar>
+                </MyChatsSidebar>
 
                 <main className="flex flex-col-reverse h-full w-full">
                     <MessageSenderForm roomId={params.id} senderId={res.data.userId} sender={session.user?.name || ""}/>
 
                     <MessagesContainer roomId={params.id} roomName={chatExistsData.name} />
                 </main>
-            </RoomSidebarProvider>
+            </MyChatsSidebarProvider>
         </div>
     )
 }

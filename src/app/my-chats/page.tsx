@@ -5,7 +5,6 @@ import { collection, getDocs, query, where } from "firebase/firestore"
 import { db } from "@/libs/firebase";
 
 export default async function MyChats(){
-    let redirectToRoom = ""
     const session = await getServerSession()
     const usersRef =  collection(db, "users");
 
@@ -19,13 +18,11 @@ export default async function MyChats(){
         }
 
         querySnapshot.forEach((doc) => {
-            const user = doc.data()
-
-            redirectToRoom = user.rooms[0]
+            const user = doc.data()            
+            redirect(`/my-chats/${user.rooms[0]}`)
         })
-  
-        redirect(`/my-chats/${redirectToRoom}`)
     }
-
+    
     redirect('/login')
+
 }
