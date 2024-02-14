@@ -48,16 +48,16 @@ export default function PrivateRoomAccess(){
     }
 
     return (
-        <div className="flex justify-center items-center h-[calc(100vh-100px)]">
+        <div className=" bg-white flex justify-center items-center h-[calc(100vh-100px)] max-w-desktop mx-auto">
             <form
                 onSubmit={handleSubmit(onSubmit)} 
-                className="relative bg-white flex flex-col py-8 sm:py-12 px-6 sm:px-16 rounded border-2 border-primary max-w-[520px]"
+                className="relative bg-secondary rounded flex flex-col py-8 sm:py-12 px-6 sm:px-16 max-w-[520px]"
             >   
-                <strong className="font-medium text-xl sm:text-[28px] text-primary mb-3">Entre na Sala Privada</strong>
+                <strong className="font-medium text-xl sm:text-[28px] text-white mb-3">Entre na Sala Privada</strong>
 
-                <InputBox {...register('id')} inputId="room-id" inputPlaceholder="aznshbglçustnnldsjfnliau" labelText="Id da Sala" />        
+                <InputBox textColor='white' {...register('id')} inputId="room-id" inputPlaceholder="aznshbglçustnnldsjfnliau" labelText="Id da Sala" />        
 
-                <InputBox {...register('password')} inputId="room-password" type="password" inputPlaceholder="••••••" labelText="Senha" />
+                <InputBox textColor='white' {...register('password')} inputId="room-password" type="password" inputPlaceholder="••••••" labelText="Senha" />
 
                 <Button>Entrar</Button>
             </form>

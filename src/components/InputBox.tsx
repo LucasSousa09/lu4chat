@@ -7,12 +7,21 @@ interface InputBoxProps extends React.ComponentPropsWithoutRef<"input"> {
     inputId: string
     inputPlaceholder: string
     labelText: string
+    textColor?: 'primary' | 'white'
 }
 
-export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(({labelText, inputId, inputType = 'text', inputPlaceholder, ...rest}, ref) => {
+export const InputBox = forwardRef<HTMLInputElement, InputBoxProps>(({labelText, inputId, inputType = 'text', inputPlaceholder, textColor = 'primary', ...rest}, ref) => {
     return (
         <>
-            <label className="text-primary text-base sm:text-xl leading-normal" htmlFor={inputId}>{labelText}</label>
+            <label 
+                htmlFor={inputId}
+                className={
+                    "text-base sm:text-xl leading-normal " + 
+                    `${textColor === 'primary' ? 'text-primary' : 'text-white' }`
+                }
+            >
+                {labelText}
+            </label>
             <input
                 id={inputId} 
                 type={inputType} 
