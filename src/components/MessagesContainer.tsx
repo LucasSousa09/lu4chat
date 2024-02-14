@@ -66,7 +66,7 @@ export function MessagesContainer({roomId, roomName = ""}: MessagesContainerProp
 
     return (
         <div className="flex-1 p-6 overflow-auto">
-            <TitleText returnButton text={roomName} />
+            <TitleText returnButton leaveRoom text={roomName} />
             <div className="flex flex-col mt-6 gap-2">
                 {
                     messages !== undefined && (
