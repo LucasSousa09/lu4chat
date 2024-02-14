@@ -7,10 +7,11 @@ export async function POST(req: Request) {
 
     const q = query(usersRef, where("email", "==", body.email))
     
-    let userRoomsArray
     let userId
+    let userRoomsArray
+    let notAllowed
 
-    let isPrivate
+    const isPrivate = body.room.split('-')[1] === undefined ? false : true
 
     try{
         const querySnapshot = await getDocs(q)
@@ -26,42 +27,41 @@ export async function POST(req: Request) {
 
             //If user never entered a chat, create the rooms array
             if(userRooms === undefined){
-                userRoomsArray = [ body.room ]
-
                 await updateDoc(usersDocRef, {
-                    rooms: [ body.room ]
+                    rooms: []
                 })
             }
             
             //Verify if user already participates at the chat
-            const roomFound = userRooms.filter((room: string) => room === body.room)
+            const roomFound = userRooms.filter((room: string) => {
+                return room === body.room
+            })
 
             userId = user.id            
             userRoomsArray = [...user.data().rooms]
 
-            //If user does participates return
-            if(roomFound.length > 0){
-                return
+            //If user does not participates in the room
+            if(roomFound.length === 0){
+                //And room is public
+                if(isPrivate === false){
+                    userRoomsArray = [...user.data().rooms, body.room]
+    
+                    await updateDoc(usersDocRef, {
+                        rooms: arrayUnion(body.room)
+                    })
+                }
+                else(
+                    notAllowed = true
+                )
             }
-
-            //If room is private
-            if(body.room.split('-')[1] === 'private'){
-                isPrivate = true
-                return
+            else{
+                userRoomsArray = [...user.data().rooms]
             }
-
-        
-            userRoomsArray = [...user.data().rooms, body.room]
-
-            //Add Room to user
-            await updateDoc(usersDocRef, {
-                rooms: arrayUnion(body.room)
-            })
-
         })
 
-        if(isPrivate === true){
-            return new Response('This room is private')
+
+        if(notAllowed === true){
+            return new Response('This room is private')    
         }
 
         return new Response(JSON.stringify({userRoomsArray, userId}), {
