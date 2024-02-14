@@ -36,6 +36,13 @@ export function MobileSidebar({ setModalIsOpen , setSidebarIsOpen, sidebarIsOpen
                     >
                         Salas Públicas
                 </Link>
+                <Link 
+                    href="/private-room-access"
+                    onClick={() => setSidebarIsOpen(state => !state)}
+                    className="text-primary font-medium flex p-4 border-b border-primary" 
+                    >
+                        Entrar numa Sala
+                </Link>
                 <button
                     onClick={() => {
                         setSidebarIsOpen(state => !state)
