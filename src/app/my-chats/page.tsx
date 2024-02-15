@@ -18,8 +18,12 @@ export default async function MyChats(){
         }
 
         querySnapshot.forEach((doc) => {
-            const user = doc.data()            
-            redirect(`/my-chats/${user.rooms[0]}`)
+            const user = doc.data()  
+            
+            if(user.rooms !== undefined){
+                redirect(`/my-chats/${user.rooms[0]}`)
+            }
+            redirect('/public-rooms')
         })
     }
     
