@@ -58,7 +58,7 @@ export default function PublicRooms(){
                         </strong>
                     </div>
                 ) : (
-                    <div className="bg-white flex flex-col items-center w-full max-w-desktop h-[calc(100vh-100px)] pt-12 mx-auto">
+                    <div className="bg-white flex flex-col items-center w-full max-w-desktop h-[calc(100vh-100px)] overflow-y-auto pt-12 mx-auto">
 
                         <TitleText text="Salas Públicas" />
 
