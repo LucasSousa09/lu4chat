@@ -24,7 +24,7 @@ export default async function Chats({params}: {params: {id: string}}){
 
     //Verify if user is logged, if not redirect to login
     if(session === null){
-        redirect('login')
+        redirect('/login?error=no+session+for+chats')
     }
 
     //Verify if the user already participates at the chat, if not adds to the user chat list

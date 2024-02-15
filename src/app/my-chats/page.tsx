@@ -27,6 +27,6 @@ export default async function MyChats(){
         })
     }
     
-    redirect('/login')
+    redirect('/login?error=no+session+for+chats')
 
 }

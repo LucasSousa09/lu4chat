@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter, useSearchParams } from 'next/navigation'
 
 import { TitleText } from '@/components/TitleText'
 import { Button } from '../../components/Button'
@@ -10,6 +10,8 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
+import { toast } from 'react-toastify'
+import { useEffect } from 'react'
 
 type CredetialInputs = {
     email: string,
@@ -31,6 +33,17 @@ export default function LoginPage(){
     //         console.error(err)
     //     }
     // }
+
+    const searchParams =  useSearchParams()
+
+    const error = searchParams.get('error')
+
+    useEffect(() => {
+        if(error === 'no session for chats'){
+            toast.error('Você precisa estar logado para acessar uma conversa')
+        }
+    },[])
+
 
     return (
         <div className="bg-white flex items-center justify-center w-full max-w-desktop h-[calc(100vh-100px)] mx-auto px-4">
