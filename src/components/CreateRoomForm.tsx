@@ -74,7 +74,8 @@ export function CreateRoomForm({ modalIsOpen, setModalIsOpen }: CreateRoomFormPr
         setCreatingRoom(true)
         try{
             if(session === null){
-                throw new Error('Must be logged to criate a room')
+                toast.error('Você precisa estar logado para criar uma sala')
+                throw new Error('Must be logged to create a room')
             }
 
             const res = await api.post('/create-room', {
