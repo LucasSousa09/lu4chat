@@ -58,7 +58,7 @@ export default async function Chats({params}: {params: {id: string}}){
                 <main className="flex flex-col-reverse h-full w-full">
                     <MessageSenderForm roomId={params.id} senderId={res.data.userId} sender={session.user?.name || ""}/>
 
-                    <MessagesContainer roomId={params.id} roomName={chatExistsData.name} />
+                    <MessagesContainer roomId={params.id} roomName={chatExistsData.name} userId={session.user?.name || ""} />
                 </main>
             </MyChatsSidebarProvider>
         </div>

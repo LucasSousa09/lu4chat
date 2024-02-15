@@ -9,7 +9,8 @@ import { ChatBalloon } from "./ChatBalloon";
 
 type MessagesContainerProps = {
     roomId: string,
-    roomName?: string
+    roomName?: string,
+    userId: string
 }
 
 type MessageProps = {
@@ -31,7 +32,7 @@ type FirebaseMessageProps = [
    }
 ]
 
-export function MessagesContainer({roomId, roomName = ""}: MessagesContainerProps){
+export function MessagesContainer({roomId, roomName = "", userId}: MessagesContainerProps){
     const [messages, setMessages] = useState<MessageProps[]>()
 
     const messagesRef = ref(database, "rooms/" + roomId + "/messages")
@@ -75,7 +76,7 @@ export function MessagesContainer({roomId, roomName = ""}: MessagesContainerProp
                         messages.length > 0 && (
                             messages.map((message, idx) => {
                                 return(
-                                <ChatBalloon key={message.id} evenMessage={idx % 2 === 0 ? "even" : "odd"} sender={message.sender} message={message.content} />
+                                <ChatBalloon key={message.id} userMessage={userId === message.sender} evenMessage={userId === message.sender ? undefined : (idx % 2 === 0 ? "even" : "odd")} sender={message.sender} message={message.content} />
                             )})
                         ) 
                     )
